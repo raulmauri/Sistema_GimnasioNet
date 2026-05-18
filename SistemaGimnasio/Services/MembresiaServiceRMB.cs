@@ -53,5 +53,35 @@ namespace SistemaGimnasio.Services
             var list = await _repo.GetPagosByMembresia(idMembresia);
             return list.Select(x => _mapper.Map<PagoDtoRMB>(x)).ToList();
         }
+
+        ///*******************************************************************************
+        // CAMBIO: Nuevo método que retorna información completa de la membresía
+        // incluyendo los datos del cliente propietario y todos sus pagos realizados
+        public async Task<MembresiaConClienteYPagosDtoRMB?> GetMembresiaConClienteYPagos(int idMembresia)
+        {
+            var membresia = await _repo.GetMembresiaById(idMembresia);
+            if (membresia == null) return null;
+
+            // CAMBIO: Obtener los pagos realizados para esta membresía
+            var pagos = await _repo.GetPagosByMembresia(idMembresia);
+
+            // CAMBIO: Mapear la membresía al DTO mejorado
+            var dto = _mapper.Map<MembresiaConClienteYPagosDtoRMB>(membresia);
+
+            // CAMBIO: Mapear la información del cliente propietario de la membresía
+            if (membresia.Cliente != null)
+            {
+                dto.Cliente = _mapper.Map<ClienteInfoDtoRMB>(membresia.Cliente);
+            }
+
+            // CAMBIO: Mapear los pagos al DTO
+            dto.Pagos = pagos.Select(x => _mapper.Map<PagoDtoRMB>(x)).ToList();
+
+            // CAMBIO: Calcular el total pagado y el saldo pendiente
+            dto.MontoTotalPagado = dto.Pagos.Sum(p => p.Monto);
+            dto.SaldoPendiente = membresia.Precio - dto.MontoTotalPagado;
+
+            return dto;
+        }
     }
 }

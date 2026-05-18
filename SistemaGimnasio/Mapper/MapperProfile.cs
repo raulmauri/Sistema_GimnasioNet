@@ -70,7 +70,13 @@ namespace SistemaGimnasio.Mapper
             CreateMap<PlanEntrenamientoDtoRMB, PlanEntrenamientoRMB>();
             CreateMap<PlanEntrenamientoRMB, PlanEntrenamientoDtoRMB>();
 
+            //***********************************************************
+            // CAMBIO: Mapeos para el DTO mejorado MembresiaConClienteYPagosDtoRMB
+            // Mapeo de MembresiaRMB a MembresiaConClienteYPagosDtoRMB (usado en el servicio para relaciones)
+            CreateMap<MembresiaRMB, MembresiaConClienteYPagosDtoRMB>();
 
+            // CAMBIO: Mapeo para la información del cliente anidada
+            CreateMap<ClienteRMB, ClienteInfoDtoRMB>();
 
 
 

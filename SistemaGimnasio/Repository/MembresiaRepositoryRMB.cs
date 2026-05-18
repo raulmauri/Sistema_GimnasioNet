@@ -21,12 +21,19 @@ namespace SistemaGimnasio.Repository
 
         public async Task<List<MembresiaRMB>> GetMembresiasAll()
         {
-            return await _db.MembresiasRMB.ToListAsync();
+            // CAMBIO: Se agregó Include() para cargar la información del cliente en cada membresía
+            return await _db.MembresiasRMB
+                .Include(m => m.Cliente)
+                .ToListAsync();
         }
 
         public async Task<MembresiaRMB?> GetMembresiaById(int idMembresia)
         {
-            return await _db.MembresiasRMB.FindAsync(idMembresia);
+            // CAMBIO: Se agregó Include() para cargar la información del cliente relacionado
+            // Esto asegura que membresia.Cliente no sea null cuando se mapee en el servicio
+            return await _db.MembresiasRMB
+                .Include(m => m.Cliente)
+                .FirstOrDefaultAsync(m => m.IdMembresia == idMembresia);
         }
 
         public async Task UpdateMembresia(MembresiaRMB membresia)

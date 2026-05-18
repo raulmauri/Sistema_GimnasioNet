@@ -50,11 +50,16 @@ namespace SistemaGimnasio.Controllers
             return Ok("Membresia eliminada correctamente.");
         }
 
+        //***********************************************************
+
+        // CAMBIO: Endpoint mejorado que retorna información completa de la membresía
+        // incluyendo datos del cliente propietario y sus pagos realizados
         [HttpGet("GetMembresia/{id}/pagos")]
         public async Task<IActionResult> GetPagos(int id)
         {
-            var list = await _service.GetPagosByMembresia(id);
-            return Ok(list);
+            var result = await _service.GetMembresiaConClienteYPagos(id);
+            if (result == null) return NotFound("La membresía no fue encontrada.");
+            return Ok(result);
         }
     }
 }
