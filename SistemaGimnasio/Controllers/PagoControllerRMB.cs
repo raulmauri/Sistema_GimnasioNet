@@ -14,21 +14,21 @@ namespace SistemaGimnasio.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("PostPago")]
         public async Task<IActionResult> Post([FromBody] PagoDtoRMB dto)
         {
             await _service.PostPago(dto);
-            return Ok();
+            return Ok("Pago registrado correctamente");
         }
 
-        [HttpGet]
+        [HttpGet("GetAllPagos")]
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetPagosAll();
             return Ok(list);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetPagoById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetPagoById(id);
@@ -36,14 +36,14 @@ namespace SistemaGimnasio.Controllers
             return Ok(item);
         }
 
-        [HttpPut]
+        [HttpPut("UpdatePago")]
         public async Task<IActionResult> Update([FromBody] PagoDtoRMB dto)
         {
             await _service.UpdatePago(dto);
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeletePago/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeletePago(id);

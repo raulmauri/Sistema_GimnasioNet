@@ -14,21 +14,21 @@ namespace SistemaGimnasio.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("PostReservaClase")]
         public async Task<IActionResult> Post([FromBody] ReservaClaseDtoRMB dto)
         {
             await _service.PostReserva(dto);
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("GetReservasClasesAll")]
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetReservasAll();
             return Ok(list);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetReservaClaseById{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetReservaById(id);
@@ -36,21 +36,21 @@ namespace SistemaGimnasio.Controllers
             return Ok(item);
         }
 
-        [HttpPut]
+        [HttpPut("UpdateReservaClase")]
         public async Task<IActionResult> Update([FromBody] ReservaClaseDtoRMB dto)
         {
             await _service.UpdateReserva(dto);
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteReservaClase/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteReserva(id);
             return Ok();
         }
 
-        [HttpGet("cliente/{idCliente}")]
+        [HttpGet("GetReservasByCliente/{idCliente}")]
         public async Task<IActionResult> GetByCliente(int idCliente)
         {
             var list = await _service.GetReservasByCliente(idCliente);

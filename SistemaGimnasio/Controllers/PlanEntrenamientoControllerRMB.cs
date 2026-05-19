@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaGimnasio.DTO;
 using SistemaGimnasio.Services.Interfaces;
+using System.Numerics;
 
 namespace SistemaGimnasio.Controllers
 {
@@ -14,21 +15,21 @@ namespace SistemaGimnasio.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("PostPlanEntrenamiento")]
         public async Task<IActionResult> Post([FromBody] PlanEntrenamientoDtoRMB dto)
         {
             await _service.PostPlan(dto);
-            return Ok();
+            return Ok("Plan de entrenamiento registrado correctamente");
         }
 
-        [HttpGet]
+        [HttpGet("GetAllPlanEntrenamiento")]
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetPlanesAll();
             return Ok(list);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetPlanEntrenamientoById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetPlanById(id);
@@ -36,21 +37,21 @@ namespace SistemaGimnasio.Controllers
             return Ok(item);
         }
 
-        [HttpPut]
+        [HttpPut("UpdatePlanEntrenamiento")]
         public async Task<IActionResult> Update([FromBody] PlanEntrenamientoDtoRMB dto)
         {
             await _service.UpdatePlan(dto);
-            return Ok();
+            return Ok("Plan de entrenamiento actualizado correctamente");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeletePlanEntrenamiento/   {id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeletePlan(id);
-            return Ok();
+            return Ok("Plan de entrenamiento eliminado correctamente");
         }
 
-        [HttpGet("cliente/{idCliente}")]
+        [HttpGet("GetPlanesByCliente/{idCliente}")]
         public async Task<IActionResult> GetByCliente(int idCliente)
         {
             var list = await _service.GetPlanesByCliente(idCliente);
