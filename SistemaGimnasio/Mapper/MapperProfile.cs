@@ -49,6 +49,12 @@ namespace SistemaGimnasio.Mapper
             CreateMap<ClienteDtoRMB, ClienteRMB>();
             CreateMap<ClienteRMB, ClienteDtoRMB>();
 
+            // CAMBIO: Mappeo para incluir nombres de cliente y entrenador en PlanEntrenamientoDtoRMB
+            CreateMap<PlanEntrenamientoRMB, PlanEntrenamientoDtoRMB>()
+                .ForMember(dest => dest.ClienteNombre, opt => opt.MapFrom(src => src.Cliente != null ? src.Cliente.Nombre + " " + src.Cliente.Apellido : null))
+                .ForMember(dest => dest.EntrenadorNombre, opt => opt.MapFrom(src => src.Entrenador != null ? src.Entrenador.Nombre + " " + src.Entrenador.Apellido : null));
+
+
             CreateMap<EntrenadorDtoRMB, EntrenadorRMB>();
             CreateMap<EntrenadorRMB, EntrenadorDtoRMB>();
 

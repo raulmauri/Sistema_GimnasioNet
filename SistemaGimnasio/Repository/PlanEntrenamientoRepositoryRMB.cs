@@ -21,12 +21,20 @@ namespace SistemaGimnasio.Repository
 
         public async Task<List<PlanEntrenamientoRMB>> GetPlanesAll()
         {
-            return await _db.PlanesEntrenamientoRMB.ToListAsync();
+            
+            return await _db.PlanesEntrenamientoRMB
+                .Include(p => p.Cliente)
+                .Include(p => p.Entrenador)
+                .ToListAsync();
         }
 
         public async Task<PlanEntrenamientoRMB?> GetPlanById(int idPlan)
         {
-            return await _db.PlanesEntrenamientoRMB.FindAsync(idPlan);
+            
+            return await _db.PlanesEntrenamientoRMB
+                .Include(p => p.Cliente)
+                .Include(p => p.Entrenador)
+                .FirstOrDefaultAsync(p => p.IdPlan == idPlan);
         }
 
         public async Task UpdatePlan(PlanEntrenamientoRMB plan)
@@ -43,7 +51,12 @@ namespace SistemaGimnasio.Repository
 
         public async Task<List<PlanEntrenamientoRMB>> GetPlanesByCliente(int idCliente)
         {
-            return await _db.PlanesEntrenamientoRMB.Where(x => x.IdCliente == idCliente).ToListAsync();
+            // incluir relaciones Cliente y Entrenador para mostrar nombres
+            return await _db.PlanesEntrenamientoRMB
+                .Where(x => x.IdCliente == idCliente)
+                .Include(p => p.Cliente)
+                .Include(p => p.Entrenador)
+                .ToListAsync();
         }
     }
 }

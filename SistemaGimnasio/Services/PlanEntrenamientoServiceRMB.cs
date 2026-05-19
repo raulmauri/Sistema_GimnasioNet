@@ -51,6 +51,7 @@ namespace SistemaGimnasio.Services
         public async Task<List<PlanEntrenamientoDtoRMB>> GetPlanesByCliente(int idCliente)
         {
             var list = await _repo.GetPlanesByCliente(idCliente);
+            // CAMBIO: el mapeo ahora incluirá ClienteNombre y EntrenadorNombre gracias a AutoMapper
             return list.Select(x => _mapper.Map<PlanEntrenamientoDtoRMB>(x)).ToList();
         }
     }
