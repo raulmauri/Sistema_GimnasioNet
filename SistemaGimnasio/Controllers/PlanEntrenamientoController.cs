@@ -7,10 +7,10 @@ namespace SistemaGimnasio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PlanEntrenamientoControllerRMB : ControllerBase
+    public class PlanEntrenamientoController : ControllerBase
     {
         private readonly IPlanEntrenamientoServiceRMB _service;
-        public PlanEntrenamientoControllerRMB(IPlanEntrenamientoServiceRMB service)
+        public PlanEntrenamientoController(IPlanEntrenamientoServiceRMB service)
         {
             _service = service;
         }
@@ -19,7 +19,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Post([FromBody] PlanEntrenamientoDtoRMB dto)
         {
             await _service.PostPlan(dto);
-            return Ok("Plan de entrenamiento registrado correctamente");
+            return Ok("Plan de entrenamiento registrado correctamente.");
         }
 
         [HttpGet("GetAllPlanEntrenamiento")]
@@ -33,7 +33,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetPlanById(id);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound("Plan de entrenamiento no encontrado.");
             return Ok(item);
         }
 
@@ -41,14 +41,14 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Update([FromBody] PlanEntrenamientoDtoRMB dto)
         {
             await _service.UpdatePlan(dto);
-            return Ok("Plan de entrenamiento actualizado correctamente");
+            return Ok("Plan de entrenamiento actualizado correctamente.");
         }
 
         [HttpDelete("DeletePlanEntrenamiento/   {id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeletePlan(id);
-            return Ok("Plan de entrenamiento eliminado correctamente");
+            return Ok("Plan de entrenamiento eliminado correctamente.");
         }
 
         [HttpGet("GetPlanesByCliente/{idCliente}")]

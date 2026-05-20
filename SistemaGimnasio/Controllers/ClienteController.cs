@@ -6,10 +6,10 @@ namespace SistemaGimnasio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClienteControllerRMB : ControllerBase
+    public class ClienteController : ControllerBase
     {
         private readonly IClienteServiceRMB _service;
-        public ClienteControllerRMB(IClienteServiceRMB service)
+        public ClienteController(IClienteServiceRMB service)
         {
             _service = service;
         }
@@ -18,7 +18,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Post([FromBody] ClienteDtoRMB dto)
         {
             await _service.PostCliente(dto);
-            return Ok("Usuario creado correctamente");
+            return Ok("Cliente creado correctamente.");
         }
 
         [HttpGet("GetAllClientes")]
@@ -31,8 +31,10 @@ namespace SistemaGimnasio.Controllers
         [HttpGet("GetClienteById/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+            if (id <= 0) return BadRequest("El id no valido");
+
             var item = await _service.GetClienteById(id);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound("Cliente no encontrado.");
             return Ok(item);
         }
 
@@ -40,19 +42,23 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Update([FromBody] ClienteDtoRMB dto)
         {
             await _service.UpdateCliente(dto);
-            return Ok("Usuario actualizado correctamente");
+            return Ok("Cliente actualizado correctamente.");
         }
 
         [HttpDelete("DeleteCliente/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            if (id <= 0) return BadRequest("El id no es valido.");
+
             await _service.DeleteCliente(id);
-            return Ok("Usuario eliminado correctamente");
+            return Ok("Cliente eliminado correctamente.");
         }
 
         [HttpGet("GetCliente/{id}/membresias")]
         public async Task<IActionResult> GetMembresias(int id)
         {
+            if (id <= 0) return BadRequest("El id no es valido.");
+
             var list = await _service.GetMembresiasByCliente(id);
             return Ok(list);
         }

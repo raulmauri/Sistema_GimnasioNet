@@ -6,10 +6,10 @@ namespace SistemaGimnasio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MembresiaControllerRMB : ControllerBase
+    public class MembresiaController : ControllerBase
     {
         private readonly IMembresiaServiceRMB _service;
-        public MembresiaControllerRMB(IMembresiaServiceRMB service)
+        public MembresiaController(IMembresiaServiceRMB service)
         {
             _service = service;
         }
@@ -32,7 +32,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetMembresiaById(id);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound("Membresia no encontrada");
             return Ok(item);
         }
 
@@ -50,10 +50,7 @@ namespace SistemaGimnasio.Controllers
             return Ok("Membresia eliminada correctamente.");
         }
 
-        //***********************************************************
-
-        // CAMBIO: Endpoint mejorado que retorna información completa de la membresía
-        // incluyendo datos del cliente propietario y sus pagos realizados
+        // Endpoint mejorado que retorna información completa de la membresía incluyendo datos del cliente propietario 
         [HttpGet("GetMembresia/{id}/pagos")]
         public async Task<IActionResult> GetPagos(int id)
         {

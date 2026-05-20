@@ -6,10 +6,10 @@ namespace SistemaGimnasio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReservaClaseControllerRMB : ControllerBase
+    public class ReservaClaseController : ControllerBase
     {
         private readonly IReservaClaseServiceRMB _service;
-        public ReservaClaseControllerRMB(IReservaClaseServiceRMB service)
+        public ReservaClaseController(IReservaClaseServiceRMB service)
         {
             _service = service;
         }
@@ -18,7 +18,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Post([FromBody] ReservaClaseDtoRMB dto)
         {
             await _service.PostReserva(dto);
-            return Ok();
+            return Ok("Reserva de clase registrada correctamente.");
         }
 
         [HttpGet("GetReservasClasesAll")]
@@ -32,7 +32,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetReservaById(id);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound("Reserva de clase no encontrada.");
             return Ok(item);
         }
 
@@ -40,14 +40,14 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Update([FromBody] ReservaClaseDtoRMB dto)
         {
             await _service.UpdateReserva(dto);
-            return Ok();
+            return Ok("Reserva de clase actualizada correctamente.");
         }
 
         [HttpDelete("DeleteReservaClase/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteReserva(id);
-            return Ok();
+            return Ok("Reserva de clase eliminada correctamente.");
         }
 
         [HttpGet("GetReservasByCliente/{idCliente}")]

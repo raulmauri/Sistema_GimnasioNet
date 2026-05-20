@@ -9,6 +9,6 @@ namespace SistemaGimnasio.Services.Interfaces
         Task<PlanEntrenamientoDtoRMB?> GetPlanById(int idPlan);
         Task UpdatePlan(PlanEntrenamientoDtoRMB planDto);
         Task DeletePlan(int idPlan);
-        Task<List<PlanEntrenamientoDtoRMB>> GetPlanesByCliente(int idCliente);
+        Task<List<PlanEntrenamientoClienteEntranadorDtoRMB>> GetPlanesByCliente(int idCliente);
     }
 }

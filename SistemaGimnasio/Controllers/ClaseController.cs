@@ -6,10 +6,10 @@ namespace SistemaGimnasio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClaseControllerRMB : ControllerBase
+    public class ClaseController : ControllerBase
     {
         private readonly IClaseServiceRMB _service;
-        public ClaseControllerRMB(IClaseServiceRMB service)
+        public ClaseController(IClaseServiceRMB service)
         {
             _service = service;
         }
@@ -32,7 +32,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetClaseById(id);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound("Clase no encontrada");
             return Ok(item);
         }
 
@@ -40,7 +40,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Update([FromBody] ClaseDtoRMB dto)
         {
             await _service.UpdateClase(dto);
-            return Ok("Clase actualizada correctamente");
+            return Ok("La Clase ha sido actualizada correctamente");
         }
 
         [HttpDelete("DeleteClase/{id}")]

@@ -46,6 +46,9 @@ namespace SistemaGimnasio.Services
             var entity = await _repo.GetClienteById(idCliente);
             if (entity == null) return;
             await _repo.DeleteCliente(entity);
+            //en casp de solo desactivar
+            //entity.Estado = false;
+            //await _repo.UpdateCliente(entity);
         }
 
         public async Task<ClienteConMembresiasDtoRMB?> GetMembresiasByCliente(int idCliente)

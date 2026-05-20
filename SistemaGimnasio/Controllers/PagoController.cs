@@ -6,10 +6,10 @@ namespace SistemaGimnasio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PagoControllerRMB : ControllerBase
+    public class PagoController : ControllerBase
     {
         private readonly IPagoServiceRMB _service;
-        public PagoControllerRMB(IPagoServiceRMB service)
+        public PagoController(IPagoServiceRMB service)
         {
             _service = service;
         }
@@ -32,7 +32,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _service.GetPagoById(id);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound("Pago no encontrado.");
             return Ok(item);
         }
 
@@ -40,7 +40,7 @@ namespace SistemaGimnasio.Controllers
         public async Task<IActionResult> Update([FromBody] PagoDtoRMB dto)
         {
             await _service.UpdatePago(dto);
-            return Ok();
+            return Ok("Pago actaulizado correctamente");
         }
 
         [HttpDelete("DeletePago/{id}")]
